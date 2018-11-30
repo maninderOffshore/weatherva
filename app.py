@@ -33,47 +33,47 @@ log = app.logger
 
 
 @app.route('/webhook', methods=['POST'])
-def webhook():
-    req = request.get_json(silent=True, force=True)
-
-    print("Request:")
-    print(json.dumps(req, indent=4))
-
-    res = processRequest(req)
-
-    res = json.dumps(res, indent=4)
-    # print(res)
-    r = make_response(res)
-    r.headers['Content-Type'] = 'application/json'
-return r
 # def webhook():
-#     """This method handles the http requests for the Dialogflow webhook
-
-#     This is meant to be used in conjunction with the weather Dialogflow agent
-#     """
 #     req = request.get_json(silent=True, force=True)
-#     try:
-#         action = req.get('queryResult').get('action')
-#     except AttributeError:
-#         return 'json error'
 
-#     if action == 'weather':
-#         res = weather(req)
-#     elif action == 'weather.activity':
-#         res = weather_activity(req)
-#     elif action == 'weather.condition':
-#         res = weather_condition(req)
-#     elif action == 'weather.outfit':
-#         res = weather_outfit(req)
-#     elif action == 'weather.temperature':
-#         res = weather_temperature(req)
-#     else:
-#         log.error('Unexpected action.')
+#     print("Request:")
+#     print(json.dumps(req, indent=4))
 
-#     print('Action: ' + action)
-#     print('Response: ' + res)
+#     res = processRequest(req)
 
-#     return make_response(jsonify({'fulfillmentText': res}))
+#     res = json.dumps(res, indent=4)
+#     # print(res)
+#     r = make_response(res)
+#     r.headers['Content-Type'] = 'application/json'
+# return r
+def webhook():
+    """This method handles the http requests for the Dialogflow webhook
+
+    This is meant to be used in conjunction with the weather Dialogflow agent
+    """
+    req = request.get_json(silent=True, force=True)
+    try:
+        action = req.get('queryResult').get('action')
+    except AttributeError:
+        return 'json error'
+
+    if action == 'weather':
+        res = weather(req)
+    elif action == 'weather.activity':
+        res = weather_activity(req)
+    elif action == 'weather.condition':
+        res = weather_condition(req)
+    elif action == 'weather.outfit':
+        res = weather_outfit(req)
+    elif action == 'weather.temperature':
+        res = weather_temperature(req)
+    else:
+        log.error('Unexpected action.')
+
+    print('Action: ' + action)
+    print('Response: ' + res)
+
+    return make_response(jsonify({'fulfillmentText': res}))
 
 
 def weather(req):
@@ -234,11 +234,11 @@ def weather_temperature(req):
     return forecast.get_temperature_response()
 
 
-# if __name__ == '__main__':
-#     app.run(debug=True, host='0.0.0.0')
 if __name__ == '__main__':
-    port = int(os.getenv('PORT', 5000))
+    app.run(debug=True, host='0.0.0.0')
+# if __name__ == '__main__':
+#     port = int(os.getenv('PORT', 5000))
 
-    print ("Starting app on port %d" % port)
+#     print ("Starting app on port %d" % port)
 
-app.run(debug=False, port=port, host='0.0.0.0')
+# app.run(debug=False, port=port, host='0.0.0.0')
