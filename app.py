@@ -32,7 +32,7 @@ app = Flask(__name__)
 log = app.logger
 
 
-@app.route('/', methods=['POST'])
+@app.route('/webhook', methods=['POST'])
 def webhook():
     """This method handles the http requests for the Dialogflow webhook
 
